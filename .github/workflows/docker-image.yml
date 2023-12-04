@@ -24,6 +24,7 @@ jobs:
 
     - name: Push image
       run: |
+        IMAGE_NAME=my-first-image
         IMAGE_ID=ghcr.io/${{ github.repository_owner }}/my-first-image
         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
