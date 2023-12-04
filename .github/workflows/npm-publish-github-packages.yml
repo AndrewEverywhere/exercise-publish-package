@@ -34,6 +34,6 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
       - run: npm ci --prefix ./sample-packages/npm
-      - run: npm publish --workspace ./sample-packages/npm
+      - run: npm publish ./sample-packages/npm/package.json
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
