@@ -13,11 +13,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file sample-packages/docker/Dockerfile --tag my-first-image --label "runnumber=${GITHUB_RUN_ID}"
+      run: docker build . --file sample-packages/docker/Dockerfile --tag image-package --label "runnumber=${GITHUB_RUN_ID}"
 
     - name: Log in to registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
@@ -25,7 +26,7 @@ jobs:
     - name: Push image
       run: |
         IMAGE_NAME=my-first-image
-        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/my-first-image
+        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/image-package
         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
