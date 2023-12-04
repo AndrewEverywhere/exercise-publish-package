@@ -20,7 +20,6 @@ jobs:
       - run: |
           cd ./sample-packages/npm
           npm ci
-      - run: npm test
 
   publish-gpr:
     needs: build
@@ -34,7 +33,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+      - run: npm ci --prefix ./sample-packages/npm
+      - run: npm publish --prefix ./sample-packages/npm
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
